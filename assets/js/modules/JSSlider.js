@@ -23,11 +23,7 @@ export default class JSSlider {
   };
 
   initEvents = () => {
-    this.imagesList.forEach((item) => {
-      item.addEventListener('click', (e) => {
-        this.fireCustomEvent(e.currentTarget, 'js-slider-img-click');
-      });
-    });
+    this.addClickEventToImages();
 
     const navNext = this.sliderRootElement.querySelector(
       '.js-slider__nav--next'
@@ -207,6 +203,15 @@ export default class JSSlider {
     this.initEvents();
     this.initCustomEvents();
   };
-}
 
-//////////////////////////
+  // Functions
+
+  addClickEventToImages = () => {
+    this.imagesList.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        this.fireCustomEvent(e.currentTarget, 'js-slider-img-click');
+      });
+    });
+  };
+  // End of functions
+}
