@@ -73,10 +73,7 @@ export default class JSSlider {
 
   onClose = () => {
     this.sliderRootElement.classList.remove('js-slider--active');
-    const thumbsList = document.querySelectorAll(
-      '.js-slider__thumbs-item:not(.js-slider__thumbs-item--prototype)'
-    );
-    thumbsList.forEach((item) => item.parentElement.removeChild(item));
+    this.clearThumbs();
     this.stopAutoplay();
   };
 
@@ -144,6 +141,13 @@ export default class JSSlider {
     }
     return targetElement;
   }
+
+  clearThumbs = () => {
+    const thumbsList = document.querySelectorAll(
+      '.js-slider__thumbs-item:not(.js-slider__thumbs-item--prototype)'
+    );
+    thumbsList.forEach((item) => item.parentElement.removeChild(item));
+  };
 
   initClickForImages = () => {
     this.imagesList.forEach((item) => {
