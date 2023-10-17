@@ -59,20 +59,7 @@ export default class JSSlider {
     const thumbsList = document.querySelectorAll(
       this.imagesSelector + '[data-slider-group-name=' + groupName + ']'
     );
-    const prototype = document.querySelector(
-      '.js-slider__thumbs-item--prototype'
-    );
-    thumbsList.forEach((item) => {
-      const thumbElement = prototype.cloneNode(true);
-      thumbElement.classList.remove('js-slider__thumbs-item--prototype');
-      const thumbImg = thumbElement.querySelector('img');
-      thumbImg.src = item.querySelector('img').src;
-      if (thumbImg.src === src) {
-        thumbImg.classList.add('js-slider__thumbs-image--current');
-      }
-
-      document.querySelector('.js-slider__thumbs').appendChild(thumbElement);
-    });
+    this.cloneOnClickThumbs(thumbsList, src);
     this.startAutoplay();
   };
 
@@ -153,6 +140,27 @@ export default class JSSlider {
   };
 
   // Functions
+  cloneOnClickThumbs = (thumbsList, currentImageSrc) => {
+    const prototype = document.querySelector(
+      '.js-slider__thumbs-item--prototype'
+    );
+    thumbsList.forEach((item) => {
+      const thumbElement = this.cloneThumbElement(prototype);
+      const thumbImg = thumbElement.querySelector('img');
+      thumbImg.src = item.querySelector('img').src;
+
+      if (thumbImg.src === currentImageSrc) {
+        thumbImg.classList.add('js-slider__thumbs-image--current');
+      }
+      document.querySelector('.js-slider__thumbs').appendChild(thumbElement);
+    });
+  };
+
+  cloneThumbElement = (prototype) => {
+    const thumbElement = prototype.cloneNode(true);
+    thumbElement.classList.remove('js-slider__thumbs-item--prototype');
+    return thumbElement;
+  };
 
   initClickForImages = () => {
     this.imagesList.forEach((item) => {
