@@ -7,63 +7,11 @@ export default class JSSlider {
     this.autoplayInterval = null;
   }
 
-  startAutoplay = () => {
-    if (!this.autoplayInterval) {
-      this.autoplayInterval = setInterval(() => {
-        this.fireCustomEvent(this.sliderRootElement, 'js-slider-img-next');
-      }, 3000);
-    }
-  };
-
-  stopAutoplay = () => {
-    if (this.autoplayInterval) {
-      clearInterval(this.autoplayInterval);
-      this.autoplayInterval = null;
-    }
-  };
-
   initEvents = () => {
-    this.addClickEventToImages();
-
-    const navNext = this.sliderRootElement.querySelector(
-      '.js-slider__nav--next'
-    );
-    if (navNext) {
-      navNext.addEventListener('click', (e) => {
-        this.fireCustomEvent(this.sliderRootElement, 'js-slider-img-next');
-      });
-
-      navNext.addEventListener('mouseenter', () => {
-        this.fireCustomEvent(this.sliderRootElement, 'js-slider-stop');
-      });
-      navNext.addEventListener('mouseleave', () => {
-        this.fireCustomEvent(this.sliderRootElement, 'js-slider-start');
-      });
-    }
-
-    const navPrev = this.sliderRootElement.querySelector(
-      '.js-slider__nav--prev'
-    );
-    if (navPrev) {
-      navPrev.addEventListener('click', (e) => {
-        this.fireCustomEvent(this.sliderRootElement, 'js-slider-img-prev');
-      });
-      navPrev.addEventListener('mouseenter', () => {
-        this.fireCustomEvent(this.sliderRootElement, 'js-slider-stop');
-      });
-      navPrev.addEventListener('mouseleave', () => {
-        this.fireCustomEvent(this.sliderRootElement, 'js-slider-start');
-      });
-    }
-
-    const zoom = this.sliderRootElement.querySelector('.js-slider__zoom');
-    if (zoom) {
-      zoom.addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) {
-          this.fireCustomEvent(this.sliderRootElement, 'js-slider-close');
-        }
-      });
-    }
+    this.initClickForImages();
+    this.initClickForNavNext();
+    this.initClickForNavPrev();
+    this.initClickForZoom();
   };
 
   fireCustomEvent = (element, name) => {
@@ -206,12 +154,71 @@ export default class JSSlider {
 
   // Functions
 
-  addClickEventToImages = () => {
+  initClickForImages = () => {
     this.imagesList.forEach((item) => {
       item.addEventListener('click', (e) => {
         this.fireCustomEvent(e.currentTarget, 'js-slider-img-click');
       });
     });
   };
-  // End of functions
+
+  initClickForNavNext = () => {
+    const navNext = this.sliderRootElement.querySelector(
+      '.js-slider__nav--next'
+    );
+    if (navNext) {
+      navNext.addEventListener('click', (e) => {
+        this.fireCustomEvent(this.sliderRootElement, 'js-slider-img-next');
+      });
+      navNext.addEventListener('mouseenter', () => {
+        this.fireCustomEvent(this.sliderRootElement, 'js-slider-stop');
+      });
+      navNext.addEventListener('mouseleave', () => {
+        this.fireCustomEvent(this.sliderRootElement, 'js-slider-start');
+      });
+    }
+  };
+
+  initClickForNavPrev = () => {
+    const navPrev = this.sliderRootElement.querySelector(
+      '.js-slider__nav--prev'
+    );
+    if (navPrev) {
+      navPrev.addEventListener('click', (e) => {
+        this.fireCustomEvent(this.sliderRootElement, 'js-slider-img-prev');
+      });
+      navPrev.addEventListener('mouseenter', () => {
+        this.fireCustomEvent(this.sliderRootElement, 'js-slider-stop');
+      });
+      navPrev.addEventListener('mouseleave', () => {
+        this.fireCustomEvent(this.sliderRootElement, 'js-slider-start');
+      });
+    }
+  };
+
+  initClickForZoom = () => {
+    const zoom = this.sliderRootElement.querySelector('.js-slider__zoom');
+    if (zoom) {
+      zoom.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+          this.fireCustomEvent(this.sliderRootElement, 'js-slider-close');
+        }
+      });
+    }
+  };
+
+  startAutoplay = () => {
+    if (!this.autoplayInterval) {
+      this.autoplayInterval = setInterval(() => {
+        this.fireCustomEvent(this.sliderRootElement, 'js-slider-img-next');
+      }, 3000);
+    }
+  };
+
+  stopAutoplay = () => {
+    if (this.autoplayInterval) {
+      clearInterval(this.autoplayInterval);
+      this.autoplayInterval = null;
+    }
+  };
 }
